@@ -5,9 +5,13 @@ This project is a **Machine Learning-powered web application** that predicts whe
 
 ## **Features**
 ✅ Predicts if a hotel booking will be canceled
+
 ✅ Uses multiple ML models (Random Forest, XGBoost, SVM, etc.)
+
 ✅ User-friendly interface with Bootstrap
+
 ✅ Automatically calculates cancellation percentage
+
 ✅ Easily deployable on cloud platforms
 
 ## **Tech Stack**
