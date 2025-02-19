@@ -90,7 +90,7 @@ def predict():
         prediction = model.predict(features_array)[0]
         
         # Convert prediction to text
-        result = "Not Canceled" if prediction else "Canceled"
+        result = "Not Cancelled" if prediction else "Cancelled"
         
         return render_template("index.html", prediction=result)
     
