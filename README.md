@@ -48,7 +48,7 @@ Access the app at **http://127.0.0.1:5000/** in your browser.
 The machine learning model was trained using:
 - **Algorithms:** Random Forest, XGBoost, SVM, KNN, Logistic Regression
 - **Feature Engineering:** Label Encoding, Scaling, SMOTE for imbalance handling
-- **Evaluation Metrics:** Accuracy, Precision, Recall, F1-Score, ROC Curve
+- **Evaluation Metrics:** Accuracy, Precision, Recall, F1-Score
 
 ## **Deployment**
 Easily deploy this application on:
