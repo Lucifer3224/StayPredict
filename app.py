@@ -21,14 +21,27 @@ def predict():
         # Get form data
         data = request.form
         
-        # Process inputs including new fields
-        lead_time = int(data.get('lead_time', 0))
-        special_requests = int(data.get('special_request', 0))
-        reservation_month = int(data.get('reservation_month', 1))
-        booking_id = int(data.get('Booking_ID', 0))
-        num_adults = int(data.get('no_of_adult', 0))
-        num_children = int(data.get('No_of_children', 0))
-        avg_price = float(data.get('average_price', 0))
+        # Process inputs with better error handling
+        def safe_int(value, default=0):
+            try:
+                return int(value) if value != '' else default
+            except (ValueError, TypeError):
+                return default
+                
+        def safe_float(value, default=0.0):
+            try:
+                return float(value) if value != '' else default
+            except (ValueError, TypeError):
+                return default
+        
+        # Process inputs including new fields with safe conversion
+        lead_time = safe_int(data.get('lead_time'))
+        special_requests = safe_int(data.get('special_request'))
+        reservation_month = safe_int(data.get('reservation_month', 1))
+        booking_id = safe_int(data.get('Booking_ID'))
+        num_adults = safe_int(data.get('no_of_adult'))
+        num_children = safe_int(data.get('No_of_children'))
+        avg_price = safe_float(data.get('average_price'))
         
         # Process room type - map from string to int
         room_type_mapping = {
@@ -39,14 +52,16 @@ def predict():
         
         # Process boolean inputs
         regular_customer = 1 if data.get('regular_customer') == 'on' else 0
-        car_parking_space = int(data.get('car_parking', 0))
+        car_parking_space = 1 if data.get('car_parking') == '1' else 0
         is_weekend = 1 if data.get('is_weekend') == 'on' else 0
-        weekend_days = int(data.get('weekend_day_input', 0)) if is_weekend else 0
+        weekend_days = safe_int(data.get('weekend_day_input')) if is_weekend else 0
         
-        # Calculate percent_can from cancellation history
-        prev_canceled = int(data.get('prev_canceled', 0))
-        prev_not_canceled = int(data.get('prev_not_canceled', 0))
-        percent_can = prev_canceled / (prev_canceled + prev_not_canceled + 1e-10)
+        # Calculate percent_can from cancellation history with safe conversion
+        prev_canceled = safe_int(data.get('prev_canceled'))
+        prev_not_canceled = safe_int(data.get('prev_not_canceled'))
+        # Avoid division by zero
+        total_reservations = prev_canceled + prev_not_canceled
+        percent_can = prev_canceled / (total_reservations + 1e-10) if total_reservations > 0 else 0
         
         # Process market segment
         market_segment = data.get('market_segment', 'Online')
@@ -65,7 +80,6 @@ def predict():
         }
         
         # Create feature array with original features
-        # Note: New fields are collected but not used in prediction since model wasn't trained with them
         feature_names = ['car parking space', 'room type', 'lead time', 'regular customer', 
                         'special requests', 'reservation_month', 'Market_Complementary', 
                         'Market_Corporate', 'Market_Offline', 'Market_Online', 
