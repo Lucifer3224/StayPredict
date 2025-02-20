@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotel Reservation Cancellation Predictor</title>
+    <style>
+        body {
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            background-image: url('https://wallpapercave.com/wp/wp1846068.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0; 
+            height: 100vh;
+        }
+            
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid rgb(0, 0, 0);
+            width: 600px;
+            height: 300px;
+            background: rgba(243, 205, 99, 0.562); 
+            border-radius: 15px; 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+        
+        .P1 {
+            text-align: center;
+            font-size: 40px;
+            font-family: "Viga", serif;
+            font-weight: 400;
+            margin: 0;
+        }
+        
+        p {
+            font-size: 20px;
+            text-align: center;
+        }
+        
+        .booknow {
+            background-color: rgb(1, 5, 10);
+            height: 40px;
+            width: 120px;
+            padding: 5px;
+            border-radius: 9px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            line-height: 30px;
+        }
+        
+        .booknow:hover {
+            background-color: rgb(58, 58, 236);
+        }
+        
+        .booknow:active {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="P1"><strong>StayPredicted</strong></p>
+        <p>Predict hotel booking cancellations with advanced AI technology. Make informed decisions for better reservation management.</p>
+        <div>
+            <a href="{{ url_for('home') }}" class="booknow"><strong>Start Prediction</strong></a>
+        </div>
+    </div>
+</body>
+</html>
