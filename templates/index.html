@@ -1,207 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Hotel Reservation Cancellation Prediction</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-            rel="stylesheet"
-    />
-    <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script
-            src="https://kit.fontawesome.com/6d56012fea.js"
-            crossorigin="anonymous"
-    ></script>
-    <style>
-        .container {
-            font-family: "Montserrat", sans-serif;
-            margin-top: 30px;
-            display: flex;
-            justify-content: space-between;
-        }
-        h1{
-            font-weight: 900;
-            font-size: 40px;
-            margin-bottom: 30px;
-        }
-
-        .form-section {
-            width: 70%;
-        }
-
-        .result-section {
-            width: 20%;
-        }
-
-        i {
-            color: #00006e;
-        }
-
-        input[type="number"] {
-            width: 90%;
-            border-radius: 10px;
-            -moz-appearance: textfield;
-        }
-
-        #ans {
-            font-weight: 700;
-            font-size: 28px;
-        }
-
-        .result {
-            font-size: larger;
-        }
-
-        .result-content p {
-            margin-top: 30px;
-        }
-        label {
-            font-weight: 500;
-            font-size: large;
-        }
-
-        input[type="radio"] {
-            margin-right: 20px;
-        }
-        h1{
-            font-weight: 700;
-            font-size: 30px;
-            margin-bottom: 30px;
-        }
-        .btn-primary{
-            margin-top: 20px;
-            font-weight: 700;
-        }
-    </style>
-</head>
-<body style="background-color: rgba(255, 159, 242, 0.986)">
-<div class="container">
-    <form action="/predict" class="form-group form-section" method="post">
-        <h1>Hotel Reservation Cancellation Prediction <i class="fa-solid fa-hotel"></i></h1>
-        
-        <div class="mb-3">
-            <label for="lead_time" class="form-label"><strong>Lead Time:</strong> <br>(Number of days between the booking date and the arrival date)</label>
-            <input type="number" class="form-control" id="lead_time" required
-                   placeholder="Enter Lead Time" name="lead_time" min="0"/>
-        </div>
-        <hr>
-        
-        <div class="mb-3">
-            <label for="room_type" class="form-label"><strong>Room Type:</strong></label>
-            <select class="form-control" id="room_type" name="room_type" required>
-                <option value="Room_Type 1">Room Type 1</option>
-                <option value="Room_Type 2">Room Type 2</option>
-                <option value="Room_Type 3">Room Type 3</option>
-                <option value="Room_Type 4">Room Type 4</option>
-                <option value="Room_Type 5">Room Type 5</option>
-                <option value="Room_Type 6">Room Type 6</option>
-                <option value="Room_Type 7">Room Type 7</option>
-            </select>
-        </div>
-        <hr>
-        
-        <div class="mb-3">
-            <label for="meal_type" class="form-label"><strong>Meal Plan:</strong></label>
-            <select class="form-control" id="meal_type" name="meal_type" required>
-                <option value="Meal Plan 1">Meal Plan 1</option>
-                <option value="Meal Plan 2">Meal Plan 2</option>
-                <option value="Meal Plan 3">Meal Plan 3</option>
-                <option value="Not Selected">Not Selected</option>
-            </select>
-        </div>
-        <hr>
-        
-        <div class="mb-3">
-            <label for="market_segment" class="form-label"><strong>Market Segment:</strong></label>
-            <select class="form-control" id="market_segment" name="market_segment" required>
-                <option value="Online">Online</option>
-                <option value="Offline">Offline</option>
-                <option value="Corporate">Corporate</option>
-                <option value="Complementary">Complementary</option>
-                <option value="Aviation">Aviation</option>
-            </select>
-        </div>
-        <hr>
-        
-        <div>
-            <label for="reservation_month" class="form-label"><strong>Reservation Month:</strong></label>
-            <select class="form-control" id="reservation_month" name="reservation_month" required>
-                <option value="1">January</option>
-                <option value="2">February</option>
-                <option value="3">March</option>
-                <option value="4">April</option>
-                <option value="5">May</option>
-                <option value="6">June</option>
-                <option value="7">July</option>
-                <option value="8">August</option>
-                <option value="9">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-            </select>
-        </div>
-        <hr>
-        
-        <div class="mb-3">
-            <label for="special_request" class="form-label"><strong>Number of Special Requests:</strong></label>
-            <input type="number" class="form-control" id="special_request" required
-                   placeholder="Enter Number of Special Requests" name="special_request" min="0"/>
-        </div>
-        <hr>
-        
-        <div class="mb-3">
-            <label for="car_parking" class="form-label"><strong>Car Parking Space Required:</strong></label>
-            <input type="number" class="form-control" id="car_parking" required
-                   placeholder="Enter Number of Car Parking Spaces" name="car_parking" min="0"/>
-        </div>
-        <hr>
-        
-        <div class="mb-3">
-            <h4><strong>Cancellation History:</strong></h4>
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="prev_canceled" class="form-label">Previously Canceled Reservations:</label>
-                    <input type="number" class="form-control" id="prev_canceled" required
-                           placeholder="Enter number" name="prev_canceled" min="0"/>
-                </div>
-                <div class="col-md-6">
-                    <label for="prev_not_canceled" class="form-label">Previously Not Canceled Reservations:</label>
-                    <input type="number" class="form-control" id="prev_not_canceled" required
-                           placeholder="Enter number" name="prev_not_canceled" min="0"/>
-                </div>
+   <head>
+      <meta charset="UTF-8"/>
+      <title>Hotel Reservation Cancellation Prediction</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link rel="preconnect" href="https://fonts.googleapis.com"/>
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+      <link
+         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+         rel="stylesheet"
+         />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link
+         rel="stylesheet"
+         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+         />
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <script
+         src="https://kit.fontawesome.com/6d56012fea.js"
+         crossorigin="anonymous"
+         ></script>
+      <style>
+         body {
+         font-family: "Montserrat", sans-serif;
+         color: #f0f0f0; 
+         display: flex; 
+         flex-direction: column ; 
+         align-items: center; 
+         background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+         url('https://wallpapercave.com/wp/wp1846068.jpg') no-repeat center center fixed;           
+         background-size: cover;
+         margin: 0; 
+         height: 100vh; }
+         .container {
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         margin-top:50px;
+         background: #878f96; 
+         padding: 30px;
+         border-radius: 20px;
+         background: rgba(126, 102, 102, 0.151); 
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+         }
+         h1 {
+         font-weight: 700;
+         font-size: 30px;
+         margin-bottom: 30px;
+         text-align: center;
+         color: #E5E5E5; 
+         }
+         .form-section {
+         width: 90%;
+         }
+         .result_container {
+         justify-items: center;
+         background-color: #52525293;
+         border-radius: 10px;
+         padding: 20px;
+         margin-top: 5px;
+         height: 200px;
+         margin-left: 27px;
+         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+         }
+         select {
+         background-color: #131213;
+         color: white; 
+         padding: 8px;
+         border-radius: 5px;
+         border: none;
+         font-size: 16px;
+         }
+         input[type="number"]{
+         width: 100%;
+         border-radius: 5px;
+         border: 1px solid #555;
+         background: #e4e2e2; 
+         color: #ffffff; 
+         }
+         .row{
+         display: flex;
+         flex-direction: row;
+         }
+         .col-md-7{
+         flex: 1;
+         }
+         input[type="number"]::placeholder {
+         color: #7a7575; 
+         }
+         #ans {
+         font-weight: 700;
+         font-size: 28px;
+         color: #7091d8;
+         }
+         .result-content p {
+         display: flex;
+         flex-direction: column;
+         font-weight: 600;
+         font-size: 18px;
+         color: #ffffff; 
+         }
+         label {
+         font-weight: 600;
+         font-size: large;
+         color: #f0f0f0; 
+         }
+         .btn-primary {
+         background-color: #151616; 
+         border: none;
+         margin-top: 20px;
+         font-weight: 700;
+         transition: background-color 0.3s ease;
+         cursor: pointer;
+         }
+         .btn-primary:hover {
+         background-color: #0056b3; 
+         }
+         .btn-primary:active {
+         opacity: 0.7;
+         }
+         .weekend_day{
+         display: none;
+         }
+         .bottom-page{
+         display: flex;
+         flex-direction: column;
+         border-color: white;
+         background-color: rgba(161, 153, 153, 0.295);
+         font-size: 20px;
+         justify-content: space-between;
+         margin-top:50px;
+         background: #878f96; 
+         padding-left: 20px;
+         padding-top: 20px;
+         border-radius: 20px;
+         background: rgba(126, 102, 102, 0.151); 
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+         }
+         .cancellation_history {
+         display: none;
+         }   
+      </style>
+      <script>
+         document.addEventListener("DOMContentLoaded", function () {
+         const weekendCheckbox = document.getElementById("is_weekend");
+         const weekendDayInput = document.querySelector(".weekend_day");
+         const regularCustomerCheckbox = document.getElementById("regular_customer");
+         const cancellationHistory = document.querySelector(".cancellation_history");
+         const form = document.querySelector("form");
+         
+         // Show/hide weekend days input based on checkbox
+         weekendCheckbox.addEventListener("change", function () {
+         if (this.checked) {
+             weekendDayInput.style.display = "block";
+         } else {
+             weekendDayInput.style.display = "none";
+             document.getElementById("weekend_day_input").value = "0"; // Reset value when unchecked
+         }
+         });
+         
+         // Show/hide cancellation history based on regular customer checkbox
+         regularCustomerCheckbox.addEventListener("change", function () {
+         if (this.checked) {
+             cancellationHistory.style.display = "block";
+         } else {
+             cancellationHistory.style.display = "none";
+             document.getElementById("prev_canceled").value = "0";
+             document.getElementById("prev_not_canceled").value = "0";
+         }
+         });
+         
+         // Form validation
+         form.addEventListener("submit", function(e) {
+         if (weekendCheckbox.checked && !document.getElementById("weekend_day_input").value) {
+             e.preventDefault();
+             alert("Please enter the number of weekend days");
+         }
+         if (regularCustomerCheckbox.checked) {
+             if (!document.getElementById("prev_canceled").value || !document.getElementById("prev_not_canceled").value) {
+                 e.preventDefault();
+                 alert("Please enter both cancellation history values");
+             }
+         }
+         });
+         });
+      </script>
+   </head>
+   <body>
+      <div class="container">
+         <form action="/predict" class="form-group form-section" method="post">
+            <h1>Hotel Reservation Cancellation Prediction <i class="fa-solid fa-hotel"></i></h1>
+            <div class="mb-3">
+               <label for="lead_time" class="form-label"><strong>Lead Time:</strong> <br>(Number of days between the booking date and the arrival date)</label>
+               <input type="number" class="form-control" id="lead_time" required placeholder="Enter Lead Time" name="lead_time" min="0"/>
             </div>
-        </div>
-        <hr>
-        
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="regular_customer" name="regular_customer">
-            <label class="form-check-label" for="regular_customer"><strong>Regular Customer</strong></label>
-        </div>
-        <hr>
-        
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="is_weekend" name="is_weekend">
-            <label class="form-check-label" for="is_weekend"><strong>Weekend Stay</strong></label>
-        </div>
-        <hr>
-        
-        <button type="submit" class="btn btn-primary">Predict Cancellation</button>
-    </form>
-    <div class="result result-section">
-        <h2>Result <i class="fa-solid fa-scroll"></i></h2>
-        <div class="result-content">
-            <p>Reservation: <br><span id="ans">{{prediction}}</span></p>
-        </div>
-    </div>
-</div>
-</body>
+            <div class="mb-3">
+               <label for="room_type" class="form-label"><strong>Room Type:</strong></label>
+               <select class="form-control" id="room_type" name="room_type" required>
+                  <option value="Room_Type 1">Room Type 1</option>
+                  <option value="Room_Type 2">Room Type 2</option>
+                  <option value="Room_Type 3">Room Type 3</option>
+                  <option value="Room_Type 4">Room Type 4</option>
+                  <option value="Room_Type 5">Room Type 5</option>
+                  <option value="Room_Type 6">Room Type 6</option>
+                  <option value="Room_Type 7">Room Type 7</option>
+               </select>
+            </div>
+            <div class="mb-3">
+               <label for="meal_type" class="form-label"><strong>Meal Plan:</strong></label>
+               <select class="form-control" id="meal_type" name="meal_type" required>
+                  <option value="Meal Plan 1">Meal Plan 1</option>
+                  <option value="Meal Plan 2">Meal Plan 2</option>
+                  <option value="Meal Plan 3">Meal Plan 3</option>
+                  <option value="Not Selected">Not Selected</option>
+               </select>
+            </div>
+            <div class="mb-3">
+               <label for="market_segment" class="form-label"><strong>Market Segment:</strong></label>
+               <select class="form-control" id="market_segment" name="market_segment" required>
+                  <option value="Online">Online</option>
+                  <option value="Offline">Offline</option>
+                  <option value="Corporate">Corporate</option>
+                  <option value="Complementary">Complementary</option>
+                  <option value="Aviation">Aviation</option>
+               </select>
+            </div>
+            <div class="mb-3">
+               <label for="special_request" class="form-label"><strong>Number of Special Requests:</strong></label>
+               <input type="number" class="form-control" id="special_request" required placeholder="Enter Number of Special Requests" name="special_request" min="0"/>
+            </div>
+            <div class="mb-3">
+               <label for="car_parking" class="form-label"><strong> Booking_ID  </strong></label>
+               <input type="number" class="form-control" id="car_parking" required placeholder="Enter Booking_ID" name="Booking_ID" min="0"/>
+            </div>
+            <div class="mb-3">
+               <label for="no_of_adult" class="form-label"><strong>number of adults</strong></label>
+               <input type="number" class="form-control" id="no_of_adult" required placeholder="Enter Number of adults" name="no_of_adult" min="0"/>
+            </div>
+            <div class="mb-3">
+               <label for="No_of_children" class="form-label"><strong>number of children </strong></label>
+               <input type="number" class="form-control" id="No_of_children" required placeholder="Enter Number of children" name=" No_of_children" min="0"/>
+            </div>
+            <div class="mb-3">
+               <label for="average_price" class="form-label"><strong>average price</strong></label>
+               <input type="number" class="form-control" id="average_price" required placeholder="Enter average price" name="average_price" min="0"/>
+            </div>
+            <div class="mb-3">
+               <h4><strong>Reservation Date:</strong></h4>
+               <div class="row">
+                  <div class="col-md-7">
+                     <label for="Year" class="form-label">Year:</label>
+                     <input type="number" class="form-control" required placeholder="Year"  />
+                  </div>
+                  <div class="col-md-7">
+                     <label for="reservation_month" class="form-label"><strong>Month:</strong></label>
+                     <select class="form-control" id="reservation_month" name="reservation_month" required>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                     </select>
+                  </div>
+                  <div class="col-md-7">
+                     <label for="day" class="form-label">Day:</label>
+                     <input type="number" class="form-control" id="Day" required placeholder="Day"  />
+                  </div>
+               </div>
+            </div>
+            <!-- Grouped checkboxes section -->
+            <div class="mb-3 form-check">
+               <input type="checkbox" class="form-check-input" id="regular_customer" name="regular_customer">
+               <label class="form-check-label" for="regular_customer"><strong>Regular Customer</strong></label>
+               <div class="cancellation_history">
+                  <div class="row mt-3">
+                     <div class="col-md-6">
+                        <label for="prev_canceled" class="form-label">Previously Canceled Reservations:</label>
+                        <input type="number" class="form-control" id="prev_canceled" placeholder="Enter number" name="prev_canceled" min="0"/>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="prev_not_canceled" class="form-label">Previously Not Canceled Reservations:</label>
+                        <input type="number" class="form-control" id="prev_not_canceled" placeholder="Enter number" name="prev_not_canceled" min="0"/>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="mb-3 form-check">
+               <input type="checkbox" class="form-check-input" id="is_weekend" name="is_weekend">
+               <label class="form-check-label" for="is_weekend"><strong>Weekend Stay</strong></label>
+               <div class="weekend_day">
+                  <label for="weekend_day_input" class="mt-3">Number of weekend days</label>
+                  <input type="number" class="form-control" id="weekend_day_input" name="weekend_day_input" min="0" placeholder="Enter number">
+               </div>
+            </div>
+            <div class="mb-3 form-check">
+               <input type="checkbox" class="form-check-input" id="car_parking" name="car_parking" value="1">
+               <label class="form-check-label" for="car_parking"><strong>Car Parking Space Required</strong></label>
+            </div>
+            <button type="submit" class="btn btn-primary">Predict Cancellation</button>
+            <div class="bottom-page ">
+               <p> <i class="fa fa-github" style="font-size:36px"></i> Developed by <a href=" https://github.com/Lucifer3224">  Habiba Mowafy</a> </p>
+               <p><i class="fa fa-linkedin-square" style="font-size:36px"></i> Contact Me <a href=" https://www.linkedin.com/in/habiba-el-sayed/">  Habiba Mowafy</a> </p>
+               </p>
+            </div>
+         </form>
+         <div class="result_container">
+            <div class="result">
+               <h2>Result <i class="fa-solid fa-scroll"></i></h2>
+               <div class="result-content">
+                  <p>Reservation: <br><span id="ans">{{prediction}}</span></p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
 </html>
